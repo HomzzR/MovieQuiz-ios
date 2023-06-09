@@ -59,6 +59,17 @@ final class MovieQuizViewController: UIViewController {
         super.viewDidLoad()
     }
     // MARK: - Функции
+    
     // MARK: - Приватные функции
+    
     // MARK: - Приватные IBAction
+    
+    @IBAction func noButtonClicked(_ sender: UIButton) {
+        
+    }
+    
+    @IBAction func yesButtonClicked(_ sender: UIButton) {
+        
+    }
+    
 }
