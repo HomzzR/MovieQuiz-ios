@@ -53,6 +53,11 @@ final class MovieQuizViewController: UIViewController {
             correctAnswer: true)
     ]
     
+    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet private var textLabel: UILabel!
+    @IBOutlet private var noButton: UIButton!
+    @IBOutlet private var yesButton: UIButton!
+    @IBOutlet private var counterLabel: UILabel!
     
     // MARK: - Override функции
     override func viewDidLoad() {

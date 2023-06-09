@@ -123,6 +123,13 @@
                             <constraint firstItem="DJG-Pi-M73" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="s4U-dI-qe2"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="counterLabel" destination="IhB-hb-WxO" id="tgm-f6-Et3"/>
+                        <outlet property="imageView" destination="nRM-2c-R8h" id="P6K-no-ypZ"/>
+                        <outlet property="noButton" destination="xRP-EE-zCa" id="1iu-H6-0Dj"/>
+                        <outlet property="textLabel" destination="7hn-K0-PSM" id="2Ca-k2-9NT"/>
+                        <outlet property="yesButton" destination="gKL-Mr-YEw" id="57w-tS-3Qt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
