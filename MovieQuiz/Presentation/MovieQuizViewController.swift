@@ -3,10 +3,16 @@ import UIKit
 final class MovieQuizViewController: UIViewController {
     // MARK: - Структуры
     
-    struct QuizQuestion {
+    struct QuizQuestion {               // структура вопроса
         let image: String
         let text: String
         let correctAnswer: Bool
+    }
+    
+    struct QuizStepViewModel {
+        let image: UIImage
+        let question: String
+        let questionNumber: String
     }
 
     // MARK: - Приватные свойства и IBOutlet
@@ -59,6 +65,9 @@ final class MovieQuizViewController: UIViewController {
     @IBOutlet private var yesButton: UIButton!
     @IBOutlet private var counterLabel: UILabel!
     
+    private var currentQuestionIndex = 0
+    private var correctAnswers = 0
+    
     // MARK: - Override функции
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +76,13 @@ final class MovieQuizViewController: UIViewController {
     
     // MARK: - Приватные функции
     
+    private func convert(model:QuizQuestion) -> QuizStepViewModel {
+        let questionStep = QuizStepViewModel(
+            image: UIImage(named: model.image) ?? UIImage(),
+            question: model.text,
+            questionNumber: "\(currentQuestionIndex + 1)/\(questions.count)")
+        return questionStep
+    }
     // MARK: - Приватные IBAction
     
     @IBAction func noButtonClicked(_ sender: UIButton) {
