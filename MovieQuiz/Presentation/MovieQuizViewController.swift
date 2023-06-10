@@ -73,7 +73,7 @@ final class MovieQuizViewController: UIViewController {
             correctAnswer: true)
     ]
     
-    // MARK: - Override functions
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
     
