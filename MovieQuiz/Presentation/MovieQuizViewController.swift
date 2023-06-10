@@ -125,6 +125,8 @@ final class MovieQuizViewController: UIViewController {
                 title: "Этот раунд окончен",
                 text: text,
                 buttonText: "Сыграть еще раз")
+            
+            show(quiz: viewModel)
         } else {
             currentQuestionIndex += 1
             
