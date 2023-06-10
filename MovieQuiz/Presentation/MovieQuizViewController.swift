@@ -83,8 +83,6 @@ final class MovieQuizViewController: UIViewController {
         show(quiz: questionViewModel)
     }
     
-    // MARK: - Functions
-    
     // MARK: - Private functions
     
     private func convert(model:QuizQuestion) -> QuizStepViewModel {
