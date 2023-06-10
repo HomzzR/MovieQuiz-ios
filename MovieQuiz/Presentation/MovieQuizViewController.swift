@@ -23,11 +23,11 @@ final class MovieQuizViewController: UIViewController {
 
     // MARK: - Private properties & IBOutlet
     
-    @IBOutlet private var imageView: UIImageView!
-    @IBOutlet private var textLabel: UILabel!
-    @IBOutlet private var noButton: UIButton!
-    @IBOutlet private var yesButton: UIButton!
-    @IBOutlet private var counterLabel: UILabel!
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var textLabel: UILabel!
+    @IBOutlet private weak var noButton: UIButton!
+    @IBOutlet private weak var yesButton: UIButton!
+    @IBOutlet private weak var counterLabel: UILabel!
     private var currentQuestionIndex = 0                             // индекс текущего вопроса
     private var correctAnswers = 0                                   // количество правильных ответов
     private let questions: [QuizQuestion] = [                        // массив с моковыми вопросами
@@ -109,9 +109,12 @@ final class MovieQuizViewController: UIViewController {
         imageView.layer.masksToBounds = true
         imageView.layer.borderWidth = 8
         imageView.layer.borderColor =  isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
+        toggleButton(false)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.showNextQuestionOrResults()
+            self.imageView.layer.borderColor = UIColor.clear.cgColor
+            self.toggleButton(true)
         }
     }
     
@@ -153,6 +156,11 @@ final class MovieQuizViewController: UIViewController {
         alert.addAction(action)
         
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func toggleButton(_ state:Bool) {
+        yesButton.isEnabled = state
+        noButton.isEnabled = state
     }
     
     // MARK: - Private IBAction
