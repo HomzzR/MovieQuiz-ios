@@ -8,11 +8,11 @@ final class MovieQuizViewController: UIViewController {
     @IBOutlet private weak var noButton: UIButton!
     @IBOutlet private weak var yesButton: UIButton!
     @IBOutlet private weak var counterLabel: UILabel!
-    private var currentQuestionIndex = 0                                 // индекс текущего вопроса
-    private var correctAnswers = 0                                       // количество правильных ответов
-    private let questionsAmount: Int = 10                                // общее количество вопросов для квиза
-    private let questionFactory: QuestionFactory = QuestionFactory()     // фабрика вопросов
-    private var currentQuestion: QuizQuestion?                           // текущий вопрос
+    private var currentQuestionIndex = 0                                         // индекс текущего вопроса
+    private var correctAnswers = 0                                               // количество правильных ответов
+    private let questionsAmount: Int = 10                                        // общее количество вопросов для квиза
+    private let questionFactory: QuestionFactoryProtocol = QuestionFactory()     // фабрика вопросов
+    private var currentQuestion: QuizQuestion?                                   // текущий вопрос
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
