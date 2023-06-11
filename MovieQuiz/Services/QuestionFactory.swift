@@ -3,7 +3,7 @@
 
 import Foundation
 
-class QuestionFactory: QuestionFactoryProtocol {
+class QuestionFactory {
     private let questions: [QuizQuestion] = [
         QuizQuestion(
             image: "The Dark Knight",
