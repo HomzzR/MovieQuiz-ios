@@ -1,26 +1,6 @@
 import UIKit
 
 final class MovieQuizViewController: UIViewController {
-    // MARK: - Structs
-    
-    struct QuizQuestion {                                              // структура вопроса
-        let image: String
-        let text: String
-        let correctAnswer: Bool
-    }
-    
-    struct QuizStepViewModel {                                        // структура показанного вопроса
-        let image: UIImage
-        let question: String
-        let questionNumber: String
-    }
-    
-    struct QuizResultsViewModel {                                     // структура результата опроса
-        let title: String
-        let text: String
-        let buttonText: String
-    }
-
     // MARK: - Private properties & IBOutlet
     
     @IBOutlet private weak var imageView: UIImageView!
