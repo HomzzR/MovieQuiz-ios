@@ -67,14 +67,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         textLabel.text = step.question
         counterLabel.text = step.questionNumber
     }
-    
-    
+
     private func showAnswerOrResult(isCorrect: Bool) {
         if isCorrect {
             correctAnswers += 1
         }
         
-        imageView.layer.masksToBounds = true
         imageView.layer.borderWidth = 8
         imageView.layer.borderColor =  isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
         toggleButton(false)
