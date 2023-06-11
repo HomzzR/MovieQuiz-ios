@@ -109,7 +109,8 @@ final class MovieQuizViewController: UIViewController {
         imageView.layer.borderColor =  isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
         toggleButton(false)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            guard let self = self else { return }
             self.showNextQuestionOrResults()
             self.imageView.layer.borderColor = UIColor.clear.cgColor
             self.toggleButton(true)
@@ -143,7 +144,8 @@ final class MovieQuizViewController: UIViewController {
         
         let action = UIAlertAction(
             title: result.buttonText,
-            style: .default) { _ in
+            style: .default) { [weak self] _ in
+                guard let self = self else { return }
                 self.currentQuestionIndex = 0
                 self.correctAnswers = 0
                 
