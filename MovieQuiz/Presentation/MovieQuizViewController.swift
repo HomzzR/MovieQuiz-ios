@@ -8,6 +8,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     @IBOutlet private weak var noButton: UIButton!
     @IBOutlet private weak var yesButton: UIButton!
     @IBOutlet private weak var counterLabel: UILabel!
+    
     private var currentQuestionIndex = 0                                         // индекс текущего вопроса
     private var correctAnswers = 0                                               // количество правильных ответов
     private let questionsAmount: Int = 10                                        // общее количество вопросов для квиза

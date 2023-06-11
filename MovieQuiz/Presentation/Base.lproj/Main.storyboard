@@ -124,10 +124,10 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="counterLabel" destination="IhB-hb-WxO" id="tgm-f6-Et3"/>
+                        <outlet property="counterLabel" destination="IhB-hb-WxO" id="B73-Z1-s6f"/>
                         <outlet property="imageView" destination="nRM-2c-R8h" id="P6K-no-ypZ"/>
                         <outlet property="noButton" destination="xRP-EE-zCa" id="1iu-H6-0Dj"/>
-                        <outlet property="textLabel" destination="7hn-K0-PSM" id="2Ca-k2-9NT"/>
+                        <outlet property="textLabel" destination="7hn-K0-PSM" id="1xo-Pt-Wp7"/>
                         <outlet property="yesButton" destination="gKL-Mr-YEw" id="57w-tS-3Qt"/>
                     </connections>
                 </viewController>
