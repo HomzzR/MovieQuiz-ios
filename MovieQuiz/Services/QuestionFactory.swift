@@ -1,9 +1,9 @@
-//  QuestionFactory.swift
-//  MovieQuiz
-
 import Foundation
 
 class QuestionFactory: QuestionFactoryProtocol {
+    
+    private weak var delegate: QuestionFactoryDelegate?
+    
     private let questions: [QuizQuestion] = [
         QuizQuestion(
             image: "The Dark Knight",
@@ -46,6 +46,10 @@ class QuestionFactory: QuestionFactoryProtocol {
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: true)
     ]
+    
+    init(delegate: QuestionFactoryDelegate) {
+        self.delegate = delegate
+    }
     
     func requestNewQuestion() -> QuizQuestion? {
         guard let index = (0..<questions.count).randomElement() else {
