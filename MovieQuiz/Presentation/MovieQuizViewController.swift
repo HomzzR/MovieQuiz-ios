@@ -9,21 +9,24 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     @IBOutlet private weak var yesButton: UIButton!
     @IBOutlet private weak var counterLabel: UILabel!
     
-    private var currentQuestionIndex = 0                                         // индекс текущего вопроса
-    private var correctAnswers = 0                                               // количество правильных ответов
-    private let questionsAmount: Int = 10                                        // общее количество вопросов для квиза
-    private var questionFactory: QuestionFactoryProtocol?                        // фабрика вопросов
-    private var currentQuestion: QuizQuestion?                                   // текущий вопрос
+    private var currentQuestionIndex = 0                                       
+    private var correctAnswers = 0
+    private let questionsAmount: Int = 10
+    private var questionFactory: QuestionFactoryProtocol?
+    private var currentQuestion: QuizQuestion?
+    private var alertPresenter: AlertPresenterProtocol?
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
     
         questionFactory = QuestionFactory(delegate: self)
-        questionFactory?.requestNewQuestion()
+        alertPresenter = AlertPresenter(delegate: self)
+        
+        resetRound()
     }
     
-    // MARK: - QuestionFactoryDelegate
+    // MARK: - Functions
     
     func didReceiveNextQuestion(question: QuizQuestion?) {
         guard let question = question else {
@@ -36,6 +39,17 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         DispatchQueue.main.async { [weak self] in
             self?.show(quiz: viewModel)
         }
+    }
+    
+    func resetRound() {
+        imageView.layer.masksToBounds = true
+        imageView.layer.borderWidth = 0
+        imageView.layer.cornerRadius = 20
+        
+        currentQuestionIndex = 0
+        correctAnswers = 0
+        
+        questionFactory?.requestNewQuestion()
     }
     
     // MARK: - Private functions
@@ -53,6 +67,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         textLabel.text = step.question
         counterLabel.text = step.questionNumber
     }
+    
     
     private func showAnswerOrResult(isCorrect: Bool) {
         if isCorrect {
@@ -74,38 +89,17 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     private func showNextQuestionOrResults() {
         if currentQuestionIndex == questionsAmount - 1 {
-            let text = "Ваше результат: \(correctAnswers)/10"
-            let viewModel = QuizResultsViewModel(
-                title: "Этот раунд окончен",
-                text: text,
-                buttonText: "Сыграть еще раз")
+            let alertModel = AlertModel(
+                title: "Этот раунд окончен!",
+                text: "Ваш результат \(correctAnswers)/\(questionsAmount)",
+                buttonText: "Сыграть ещё раз",
+                completion: resetRound)
             
-            show(quiz: viewModel)
+            alertPresenter?.requestAler(for: alertModel)
         } else {
             currentQuestionIndex += 1
             questionFactory?.requestNewQuestion()
         }
-    }
-    
-    private func show(quiz result: QuizResultsViewModel) {
-        let alert = UIAlertController(
-            title: result.title,
-            message: result.text,
-            preferredStyle: .alert)
-        
-        let action = UIAlertAction(
-            title: result.buttonText,
-            style: .default) { [weak self] _ in
-                guard let self = self else { return }
-                self.currentQuestionIndex = 0
-                self.correctAnswers = 0
-                
-                questionFactory?.requestNewQuestion()
-            }
-        
-        alert.addAction(action)
-        
-        self.present(alert, animated: true, completion: nil)
     }
     
     private func toggleButton(_ state:Bool) {
