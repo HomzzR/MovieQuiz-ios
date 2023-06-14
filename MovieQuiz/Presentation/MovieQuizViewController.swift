@@ -24,6 +24,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         alertPresenter = AlertPresenter(delegate: self)
         
         resetRound()
+        
+        /// ПЕСОЧНИЦА И БАНДЛ
+        
+        print(NSHomeDirectory())                                    // Песочница
+        UserDefaults.standard.set(true, forKey: "viewDidLoad")
+        print(Bundle.main.bundlePath)                               // Бандл
     }
     
     // MARK: - Functions
