@@ -27,9 +27,10 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         
         /// ПЕСОЧНИЦА И БАНДЛ
         
-        print(NSHomeDirectory())                                    // Песочница
+        print(NSHomeDirectory())                                                                     // Песочница
         UserDefaults.standard.set(true, forKey: "viewDidLoad")
-        print(Bundle.main.bundlePath)                               // Бандл
+        print(Bundle.main.bundlePath)                                                                // Бандл
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!)         // Адрес папки Documents в песочнице
     }
     
     // MARK: - Functions
