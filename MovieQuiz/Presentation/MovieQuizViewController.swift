@@ -42,6 +42,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             let data = hello.data(using: .utf8)
             FileManager.default.createFile(atPath: documentsURL.path, contents: data)
         }
+        try? print(String(contentsOf: documentsURL))
     }
     
     // MARK: - Functions
