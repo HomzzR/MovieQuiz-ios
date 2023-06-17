@@ -9,72 +9,23 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     @IBOutlet private weak var yesButton: UIButton!
     @IBOutlet private weak var counterLabel: UILabel!
     
-    private var currentQuestionIndex = 0                                       
+    private var currentQuestionIndex = 0
     private var correctAnswers = 0
     private let questionsAmount: Int = 10
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
     private var alertPresenter: AlertPresenterProtocol?
+    private var statisticService: StatisticService?
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         questionFactory = QuestionFactory(delegate: self)
         alertPresenter = AlertPresenter(delegate: self)
+        statisticService = StatisticServiceImplementation()
         
         resetRound()
-        
-        /// ПЕСОЧНИЦА И БАНДЛ
-        
-        print(NSHomeDirectory())                                                                     // Песочница
-        UserDefaults.standard.set(true, forKey: "viewDidLoad")
-        print(Bundle.main.bundlePath)                                                                // Бандл
-        print("___________")
-        //print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!)         // Адрес папки Documents в песочнице
-        var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        print(documentsURL)
-        let fileName = "text.swift"
-        documentsURL.appendPathComponent(fileName)
-        print(documentsURL)
-        if !FileManager.default.fileExists(atPath: documentsURL.path) {
-            let hello = "Hello world!"
-            let data = hello.data(using: .utf8)
-            FileManager.default.createFile(atPath: documentsURL.path, contents: data)
-        }
-        try? print(String(contentsOf: documentsURL))
-        
-        enum FileManagerError: Error {
-            case fileDoesntExist
-        }
-        
-        /// Пробрасывание ошибки вверх по стеку
-        
-        func string(from documentsURL: URL) throws -> String {
-            if !FileManager.default.fileExists(atPath: documentsURL.path) {
-                throw FileManagerError.fileDoesntExist
-            }
-            return try String(contentsOf: documentsURL)
-        }
-        
-        /// Обработка ошибок с помощью try catch
-        
-        var str = ""
-        do {
-            str = try string(from: documentsURL)
-        } catch FileManagerError.fileDoesntExist{
-            print("Файл по адресу \(documentsURL.path) не существует")
-        } catch {
-            print("Неизвестная ошибка чтения из файла \(error)")
-        }
-        
-        /// Опциональная обработка ошибок
-        
-        var str1 = try? string(from: documentsURL)
-        
-        ///Принудительная распаковка опционала в случае обработки ошибок
-        
-        var str2 = try! string(from: documentsURL)
     }
     
     // MARK: - Functions
@@ -118,7 +69,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         textLabel.text = step.question
         counterLabel.text = step.questionNumber
     }
-
+    
     private func showAnswerOrResult(isCorrect: Bool) {
         if isCorrect {
             correctAnswers += 1
@@ -138,13 +89,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     private func showNextQuestionOrResults() {
         if currentQuestionIndex == questionsAmount - 1 {
-            let alertModel = AlertModel(
-                title: "Этот раунд окончен!",
-                text: "Ваш результат \(correctAnswers)/\(questionsAmount)",
-                buttonText: "Сыграть ещё раз",
-                completion: resetRound)
-            
-            alertPresenter?.requestAler(for: alertModel)
+            showFinalResults()
         } else {
             currentQuestionIndex += 1
             questionFactory?.requestNewQuestion()
@@ -155,6 +100,39 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         yesButton.isEnabled = state
         noButton.isEnabled = state
     }
+    
+    private func showFinalResults() {
+        statisticService?.store(correct: correctAnswers, total: questionsAmount)
+        
+        let alertModel = AlertModel(
+            title: "Этот раунд окончен!",
+            text: makeResultsMessage(),
+            buttonText: "Сыграть ещё раз",
+            completion: { [weak self ] in
+                self?.resetRound()
+            }
+        )
+        alertPresenter?.requestAler(for: alertModel)
+    }
+    
+    private func makeResultsMessage() -> String {
+        
+        guard let statisticService = statisticService,
+              let bestGame = statisticService.bestGame else {
+            assertionFailure("error message")
+            return ""
+        }
+        
+        let currentGameResultLine = "Ваш результат: \(correctAnswers)/\(questionsAmount)"
+        let totalPlaysCountLine = "Количество сыгранных квизов: \(statisticService.gamesCount)"
+        let bestGameLine = "Рекорд: \(bestGame.correct)/\(bestGame.total) (\(bestGame.date.dateTimeString))"
+        let accuracy = String(format: "%.2f", statisticService.totalAccuracy)
+        let averageAccuracyLine = "Средняя точность: \(accuracy)%"
+        let resultMessage = [currentGameResultLine, totalPlaysCountLine, bestGameLine, averageAccuracyLine].joined(separator: "\n")
+        
+        return resultMessage
+    }
+    
     
     // MARK: - Private IBAction
     
