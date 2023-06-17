@@ -8,8 +8,6 @@ struct BestGame: Codable {
 
 extension BestGame: Comparable {
     private var accuracy: Double {
-        
-        // have to check dividing by zero
         guard total != 0 else {
             return 0
         }
