@@ -22,11 +22,13 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        questionFactory = QuestionFactory(delegate: self)
+        questionFactory = QuestionFactory(delegate: self, moviesLoader: MoviesLoader())
         alertPresenter = AlertPresenter(delegate: self)
         statisticService = StatisticServiceImplementation()
         
         resetRound()
+        showLoadingIndicator()
+        questionFactory?.loadData()
     }
     
     // MARK: - Functions
@@ -87,7 +89,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
                 self.currentQuestionIndex = 0
                 self.correctAnswers = 0
                 
-                self.questionFactory?.requestNewQuestion()
+                self.questionFactory?.loadData()
             })
         alertPresenter?.requestAler(for: model)
     }
