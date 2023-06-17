@@ -30,7 +30,18 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         print(NSHomeDirectory())                                                                     // Песочница
         UserDefaults.standard.set(true, forKey: "viewDidLoad")
         print(Bundle.main.bundlePath)                                                                // Бандл
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!)         // Адрес папки Documents в песочнице
+        print("___________")
+        //print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!)         // Адрес папки Documents в песочнице
+        var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        print(documentsURL)
+        let fileName = "text.swift"
+        documentsURL.appendPathComponent(fileName)
+        print(documentsURL)
+        if !FileManager.default.fileExists(atPath: documentsURL.path) {
+            let hello = "Hello world!"
+            let data = hello.data(using: .utf8)
+            FileManager.default.createFile(atPath: documentsURL.path, contents: data)
+        }
     }
     
     // MARK: - Functions
