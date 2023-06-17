@@ -43,6 +43,38 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             FileManager.default.createFile(atPath: documentsURL.path, contents: data)
         }
         try? print(String(contentsOf: documentsURL))
+        
+        enum FileManagerError: Error {
+            case fileDoesntExist
+        }
+        
+        /// Пробрасывание ошибки вверх по стеку
+        
+        func string(from documentsURL: URL) throws -> String {
+            if !FileManager.default.fileExists(atPath: documentsURL.path) {
+                throw FileManagerError.fileDoesntExist
+            }
+            return try String(contentsOf: documentsURL)
+        }
+        
+        /// Обработка ошибок с помощью try catch
+        
+        var str = ""
+        do {
+            str = try string(from: documentsURL)
+        } catch FileManagerError.fileDoesntExist{
+            print("Файл по адресу \(documentsURL.path) не существует")
+        } catch {
+            print("Неизвестная ошибка чтения из файла \(error)")
+        }
+        
+        /// Опциональная обработка ошибок
+        
+        var str1 = try? string(from: documentsURL)
+        
+        ///Принудительная распаковка опционала в случае обработки ошибок
+        
+        var str2 = try! string(from: documentsURL)
     }
     
     // MARK: - Functions
