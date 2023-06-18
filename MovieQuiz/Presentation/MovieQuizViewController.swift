@@ -55,6 +55,15 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         questionFactory?.requestNewQuestion()
     }
     
+    func didLoadDataFromServer() {
+        hideLoadingIndicator()
+        questionFactory?.requestNewQuestion()
+    }
+    
+    func didFailToLoadData(with error: Error) {
+        showErrorNetwork(message: error.localizedDescription)
+    }
+    
     // MARK: - Private functions
     
     private func showLoadingIndicator() {
@@ -86,7 +95,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     private func convert(model:QuizQuestion) -> QuizStepViewModel {
         let questionStep = QuizStepViewModel(
-            image: UIImage(named: model.image) ?? UIImage(),
+            image: UIImage(data: model.image) ?? UIImage(),
             question: model.text,
             questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)")
         return questionStep
