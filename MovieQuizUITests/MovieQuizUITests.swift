@@ -66,7 +66,8 @@ final class MovieQuizUITests: XCTestCase {
             sleep(2)
         }
         
-        XCTAssertEqual(app.staticTexts["Index"].label, "10/10")
+        let indexLabel = app.staticTexts["Index"]
+        XCTAssertEqual(indexLabel.label, "10/10")
         let alert = app.alerts["Alert"]
         
         XCTAssertTrue(alert.exists)
@@ -80,7 +81,8 @@ final class MovieQuizUITests: XCTestCase {
             sleep(2)
         }
         
-        XCTAssertEqual(app.staticTexts["Index"].label, "10/10")
+        let indexLabel = app.staticTexts["Index"]
+        XCTAssertEqual(indexLabel.label, "10/10")
         sleep(3)
         let alert = app.alerts["Alert"]
         alert.buttons.firstMatch.tap()
@@ -88,7 +90,7 @@ final class MovieQuizUITests: XCTestCase {
         sleep(2)
         
         XCTAssertFalse(alert.exists)
-        XCTAssertEqual(app.staticTexts["Index"].label, "1/10")
+        XCTAssertEqual(indexLabel.label, "1/10")
     }
     
     func testIndex()  {
@@ -96,6 +98,7 @@ final class MovieQuizUITests: XCTestCase {
         app.buttons["Yes"].tap()
         sleep(3)
 
-        XCTAssertEqual(app.staticTexts["Index"].label, "2/10")
+        let indexLabel = app.staticTexts["Index"]
+        XCTAssertEqual(indexLabel.label, "2/10")
     }
 }
