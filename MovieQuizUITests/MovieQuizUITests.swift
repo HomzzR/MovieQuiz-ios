@@ -18,9 +18,4 @@ final class MovieQuizUITests: XCTestCase {
         app.terminate()
         app = nil
     }
-    
-    func testScreenCast() throws {
-        XCUIApplication().buttons["Да"].tap()
-        
-    }
 }
