@@ -15,6 +15,8 @@ func requestAler(for model: AlertModel) {
             title: model.title,
             message: model.text,
             preferredStyle: .alert)
+    
+        alert.view.accessibilityIdentifier = "Alert"
         
         let action = UIAlertAction(
             title: model.buttonText,
