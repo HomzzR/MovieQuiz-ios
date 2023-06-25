@@ -90,4 +90,12 @@ final class MovieQuizUITests: XCTestCase {
         XCTAssertFalse(alert.exists)
         XCTAssertEqual(app.staticTexts["Index"].label, "1/10")
     }
+    
+    func testIndex()  {
+        sleep(4)
+        app.buttons["Yes"].tap()
+        sleep(3)
+
+        XCTAssertEqual(app.staticTexts["Index"].label, "2/10")
+    }
 }
