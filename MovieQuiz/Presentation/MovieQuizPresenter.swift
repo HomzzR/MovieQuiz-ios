@@ -2,6 +2,7 @@ import UIKit
 
 final class MovieQuizPresenter {
     // MARK: - Properties
+    
     private var currentQuestionIndex: Int = 0
     private var correctAnswers: Int = 0
     private let questionsAmount: Int = 10
@@ -60,6 +61,7 @@ final class MovieQuizPresenter {
     
     private func switchToNextQuestion() {
         currentQuestionIndex += 1
+        prepareQuestion()
     }
     
     private func prepareQuestion() {
