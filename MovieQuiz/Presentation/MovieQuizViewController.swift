@@ -59,7 +59,7 @@ final class MovieQuizViewController: UIViewController {
     func prepareViewForNextQuestion() {
         imageView.layer.borderColor = UIColor.clear.cgColor
         imageView.image = UIImage()
-        textLabel.text = ""
+        textLabel.text?.removeAll()
     }
     
     func prepareViewAfterAnswer(isCorrectAnswer: Bool) {
@@ -78,8 +78,8 @@ final class MovieQuizViewController: UIViewController {
             title: result.title,
             text: result.text,
             buttonText: result.buttonText,
-            completion: { [weak self ] in
-                self?.presenter.restartGame()
+            completion: { [weak presenter ] in
+                presenter?.restartGame()
             }
         )
         alertPresenter?.requestAler(for: alertModel)

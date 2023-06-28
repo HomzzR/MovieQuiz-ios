@@ -36,7 +36,7 @@ final class MovieQuizUITests: XCTestCase {
         let secondPosterData = secondPoster.screenshot().pngRepresentation
         XCTAssertTrue(secondPoster.exists)
         
-        XCTAssertNotEqual(firstPoster, secondPoster)
+        XCTAssertNotEqual(firstPosterData, secondPosterData)
     }
     
     func testNoButton() {
@@ -56,7 +56,7 @@ final class MovieQuizUITests: XCTestCase {
         let secondPosterData = secondPoster.screenshot().pngRepresentation
         XCTAssertTrue(secondPoster.exists)
         
-        XCTAssertNotEqual(firstPoster, secondPoster)
+        XCTAssertNotEqual(firstPosterData, secondPosterData)
     }
     
     func testAlertShow() {
@@ -71,7 +71,7 @@ final class MovieQuizUITests: XCTestCase {
         let alert = app.alerts["Alert"]
         
         XCTAssertTrue(alert.exists)
-        XCTAssertTrue(alert.label == "Этот раунд окончен!")
+        XCTAssertTrue(alert.label == "Этот раунд окончен")
     }
     
     func testAlertDismiss() {

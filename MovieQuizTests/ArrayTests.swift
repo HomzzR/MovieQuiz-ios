@@ -4,7 +4,7 @@ import XCTest
 class ArrayTests: XCTestCase {
     func testGetValueInRange() throws { // тест на успешное взятие элемента по индексу
         // Given
-        let array = [1, 1, 2, 3, 5]
+        let array = [1, 6, 2, 3, 5]
         
         // When
         let value = array[safe: 2]
@@ -16,7 +16,7 @@ class ArrayTests: XCTestCase {
     
     func testGetValueOutOfRange() throws {
         // Given
-        let array = [1, 1, 2, 3, 5]
+        let array = [1, 4, 2, 3, 5]
         
         // When
         let value = array[safe: 20]
